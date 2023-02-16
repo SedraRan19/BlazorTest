@@ -1,0 +1,99 @@
+﻿@page "/"
+
+<PageTitle>Live Monitoring</PageTitle>
+
+@using BlazorTeste.Data
+@inject WeatherForecastService ForecastService
+
+<style>
+    #name {
+        font-weight: bold;
+        color: #00008B;
+    }
+
+    #log {
+        color: #1E90FF;
+    }
+
+    #calltime {
+        color: red;
+    }
+
+    #call {
+        color: #228B22;
+    }
+
+    .down {
+        text-align: center;
+    }
+</style>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < 6; i++)
+        {
+            <tr>
+                <td><a>@(i + 1)</a></td>
+                <td><a id="name">@name[i]</a> <br /> <a>-</a></td>
+                <td><a id="log">@log[i]</a> <br /> <a>@datelog[i]</a></td>
+                <td><a>@active[i]</a> <br /> <a>@dateactive[i]</a></td>
+                @if (call[i] == "Hang UP")
+                {
+                    <td>
+                        <a>@call[i]</a> <br /> <a id="calltime">@calltime[i]</a>
+                    </td>
+                }
+                @if (call[i] == "On Call")
+                {
+                    <td>
+                        <a id="call">@call[i]</a> <br /> <a>@calltime[i]</a>
+                    </td>
+                }
+                @if (call[i] == "On Call")
+                {
+                    <td>
+                        <form class="row g-3">
+
+                            <div class="col-auto">
+                                <select id="disabledSelect" class="form-select" style="width:150px">
+                                    <option></option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                </select>
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary mb-3">Call</button>
+                            </div>
+                        </form>
+                    </td>
+                }
+                @if (call[i] != "On Call")
+                {
+                    <td></td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@code {
+    //Tableaus pour l'exemple
+    public string[] name = { "Jean1", "Jean2", "Jean3", "Jean4", "Jean5", "Jean6", "Jean7", "Jean8", "Jean9" };
+    public string[] log = { "Logged IN", "Logged IN", "-", "Logged IN", "Logged IN", "Logged IN", "Logged IN", "Logged IN", "Logged IN" };
+    public string[] datelog = { "08h45", "11h15", "-", "10h28", "09h33", "15h02", "15h16", "-", "-", "-" };
+    public string[] active = { "InActive", "Active", "-", "Active", "Active", "Active", "Active", "-", "-", "-" };
+    public string[] dateactive = { "17h01", "16h57", "-", "16h12", "15h19", "15h04", "15h18", "-", "-", "-" };
+    public string[] call = { "Hang UP", "Hang UP", "On Call", "On Call", "Hang UP", "Hang UP", "-", "-", "-" };
+    public string[] calltime = { "00:05:48", "00:00:35", "00:08:32", "00:21:03", "00:10:05", "00:11:40", "00:01:36", "-", "-", "-" };
+}
